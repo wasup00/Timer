@@ -5,11 +5,16 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         initializeViews();
+        //setupEdgeToEdge();
         initializeFirebase();
         setupListeners();
     }
@@ -75,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Firebase listener cancelled", error.toException());
             }
         });
+    }
+
+    private void setupEdgeToEdge() {
+        View contentView = findViewById(android.R.id.content);
+        ViewCompat.setOnApplyWindowInsetsListener(contentView, (view, windowInsets) -> {
+            WindowInsetsCompat insets = WindowInsetsCompat.toWindowInsetsCompat(windowInsets.toWindowInsets());
+            int systemBars = WindowInsetsCompat.Type.systemBars();
+
+            int systemBarInsetLeft = insets.getInsets(systemBars).left;
+            int systemBarInsetTop = insets.getInsets(systemBars).top;
+            int systemBarInsetRight = insets.getInsets(systemBars).right;
+            int systemBarInsetBottom = insets.getInsets(systemBars).bottom;
+
+            view.setPadding(systemBarInsetLeft, systemBarInsetTop, systemBarInsetRight, systemBarInsetBottom);
+
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        // Make the content appear behind the system bars
+        WindowInsetsControllerCompat controller = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
+        if (controller != null) {
+            controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+            controller.hide(WindowInsetsCompat.Type.systemBars());
+        }
     }
 
     private void fetchInitialDate() {
