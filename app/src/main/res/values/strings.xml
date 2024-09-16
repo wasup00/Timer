@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Timer</string>
+    <string name="no_timer">No timer</string>
+    <string name="invalid_date">Invalid date</string>
+    <string name="countdown_done">Countdown done!</string>
+    <string name="countdown_format">%1$d days %2$d hours %3$d minutes %4$d seconds</string>
+</resources>
