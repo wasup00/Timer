@@ -3,7 +3,7 @@
     <string name="no_timer">No timer</string>
     <string name="invalid_date">Invalid date</string>
     <string name="countdown_done">Countdown done!</string>
-    <string name="countdown_format">%1$d days %2$d hours %3$d minutes %4$d seconds</string>
+    <string name="countdown_format">%1$d %2$s %3$d %4$s %5$d %6$s  %7$d %8$s</string>
     <string name="countdown">Countdown</string>
     <string name="SelectDateButton">Select Date Button</string>
     <string name="select_date">Select Date</string>
